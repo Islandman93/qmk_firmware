@@ -19,7 +19,7 @@
 
 //**************** Definitions needed for quad function to work *********************//
 enum {
-  SE_TAP_DANCE = 0
+  ED_TAP_DANCE = 0
 };
 //Enums used to clearly convey the state of the tap dance
 enum {
@@ -53,36 +53,36 @@ int cur_dance (qk_tap_dance_state_t *state) {
 }
 
 //**************** Definitions needed for quad function to work *********************//
-// Backspace Shift TD
+// Enter Delete TD
 //instanalize an instance of 'tap' for the 'x' tap dance.
-static tap se_tap_state = {
+static tap ed_tap_state = {
   .is_press_action = true,
   .state = 0
 };
 
-void se_finished (qk_tap_dance_state_t *state, void *user_data) {
-  se_tap_state.state = cur_dance(state);
-  switch (se_tap_state.state) {
-    case SINGLE_TAP: register_code(KC_SPC); break;
-    case SINGLE_HOLD: register_code(KC_ENT); break;
-    default: register_code(KC_SPC); unregister_code(KC_SPC); register_code(KC_SPC);
+void ed_finished (qk_tap_dance_state_t *state, void *user_data) {
+  ed_tap_state.state = cur_dance(state);
+  switch (ed_tap_state.state) {
+    case SINGLE_TAP: register_code(KC_ENT); break;
+    case SINGLE_HOLD: register_code(KC_DEL); break;
+    default: register_code(KC_ENT); unregister_code(KC_ENT); register_code(KC_ENT);
     //Last case is for fast typing. Assuming your key is `f`:
     //For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
     //In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
   }
 }
 
-void se_reset (qk_tap_dance_state_t *state, void *user_data) {
-  switch (se_tap_state.state) {
-    case SINGLE_TAP: unregister_code(KC_SPC); break;
-    case SINGLE_HOLD: unregister_code(KC_ENT); break;
-    default: unregister_code(KC_SPC);
+void ed_reset (qk_tap_dance_state_t *state, void *user_data) {
+  switch (ed_tap_state.state) {
+    case SINGLE_TAP: unregister_code(KC_ENT); break;
+    case SINGLE_HOLD: unregister_code(KC_DEL); break;
+    default: unregister_code(KC_ENT);
   }
-  se_tap_state.state = 0;
+  ed_tap_state.state = 0;
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [SE_TAP_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, se_finished, se_reset)
+  [ED_TAP_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ed_finished, ed_reset)
 };
 
 // KEYMAP
@@ -105,17 +105,20 @@ enum custom_keycodes {
 #define KC_AMAC ARROW_MACRO
 
 // Holds for layer
-#define KC_DEL1 LT(_LOWER, KC_DEL)
+#define KC_SPA1 LT(_LOWER, KC_SPACE)
 #define KC_TAB1 LT(_LOWER, KC_TAB)
 
 // Space on tap, enter on hold.
-#define KC_SPNT TD(SE_TAP_DANCE)
-
+#define KC_ENDE TD(ED_TAP_DANCE)
 #define KC_BSHT SFT_T(KC_BSPC)
+
+#define KC_CCOL LSFT(KC_P)
 
 // Jumps the cursor a word right or left
 #define KC_WRDRT LCTL(KC_RIGHT)
 #define KC_WRDLT LCTL(KC_LEFT)
+
+#define KC_RST RESET
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -129,16 +132,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----+----|           |----+----+----+----+----+----+----|
      LSFT, Z  , X  , C  , V  , B  ,WRDLT,          WRDRT, N  , M  ,COMM,DOT ,SLSH,QUOT,
   //|----+----+----+----+----+----+----+----|||----+----+----+----+----+----+----+----|
-     LCTL,LGUI, APP,LALT,HOME,SPNT,DEL1,BSHT , ENT ,TAB1,BSHT,END ,DOWN, UP ,LEFT,RIGHT
+     LCTL,LGUI, APP,LALT,HOME,SPA1,ENDE,BSHT , ENT ,TAB1,BSHT,END ,DOWN, UP ,LEFT,RIGHT
   ),
 
   [_LOWER] = KC_KEYMAP(
   //,----+----+----+----+----+----+----|           |----+----+----+----+----+----+----|
-         , F1 , F2 , F3 , F4 , F5 ,F11 ,             F12, F6 , F7 , F8 , F9 ,    ,    ,
+     RST , F1 , F2 , F3 , F4 , F5 ,F11 ,             F12, F6 , F7 , F8 , F9 , F10,    ,
   //|----+----+----+----+----+----+----|           |----+----+----+----+----+----+----|
-     TILD,EXLM, AT ,HASH,DLR ,PERC,    ,                ,CIRC,AMPR,ASTR,    ,    ,    ,
+     TILD,EXLM, AT ,HASH,DLR ,PERC,    ,                ,CIRC,AMPR,ASTR,    ,CCOL,    ,
   //|----+----+----+----+----+----+----|           |----+----+----+----+----+----+----|
-         ,    ,LBRC,LPRN,UNDS,LCBR,    ,                ,RCBR, EQL,RPRN,RBRC,COLN,    ,
+         ,    ,LBRC,LPRN,UNDS,LCBR,    ,                ,RCBR, EQL,RPRN,RBRC,    ,    ,
   //|----+----+----+----+----+----+----|           |----+----+----+----+----+----+----|
          ,    ,    ,PMAC,MINS,AMAC,    ,                ,    ,PLUS,    ,    ,    ,    ,
   //|----+----+----+----+----+----+----+----|||----+----+----+----+----+----+----+----|
