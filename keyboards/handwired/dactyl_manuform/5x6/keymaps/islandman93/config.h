@@ -25,5 +25,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MASTER_RIGHT
 //#define EE_HANDS
 // Rows are doubled-up
-#define PERMISSIVE_HOLD
+// #define PERMISSIVE_HOLD
 #define TAPPING_TERM 75
