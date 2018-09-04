@@ -125,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TILD,KC_EXLM,KC_AT,  KC_HASH,KC_DLR, KC_PERC,                        KC_CIRC, KC_AMPR,KC_ASTR,_______,_______,_______,
      _______,_______,KC_LBRC,KC_LPRN,KC_UNDS,KC_LCBR,                        KC_RCBR, KC_EQL, KC_RPRN,KC_RBRC,KC_COLN,_______,
      _______,_______,_______,KC_PMAC,KC_MINS,KC_AMAC,                        _______, _______,KC_PLUS,_______,_______,_______,
-                     _______,KC_PSCR,                                                         _______,_______,
+                     KC_PGDN,KC_PSCR,                                                         _______,KC_PGUP,
                                              _______,_______,            _______,_______,
                                              _______,_______,            _______,_______,
                                              _______,_______,            _______,_______
@@ -136,8 +136,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
        _______,KC_MUTE,KC_MPRV,KC_MPLY,KC_MNXT,_______,                        _______,KC_MPRV,KC_MPLY,KC_MNXT,KC_MUTE,_______,
        _______,KC_RGHT,KC_LEFT,KC_UP  ,KC_DOWN,_______,                        _______,KC_DOWN,KC_UP  ,KC_LEFT,KC_RGHT,_______,
-       _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-                                               KC_VOLU,KC_VOLD,            KC_VOLU,KC_VOLD,
+       _______,_______,_______,KC_VOLD,KC_VOLU,_______,                        _______,KC_VOLU,KC_VOLD,_______,_______,_______,
+                                               KC_PGDN,KC_PGUP,            KC_PGUP,KC_PGDN,
                                                _______,_______,            _______,_______,
                                                _______,_______,            _______,_______,
                                                _______,_______,            _______,_______
